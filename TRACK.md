@@ -4,7 +4,7 @@
 Candidates must **fork** the repository and, once they have completed their work, submit the link to their forked repository via email to their recruitment contact.
 
 ## Questions and Clarifications
-Any questions or clarifications must be submitted by opening an issue on this repository.
+Any questions or clarifications must be submitted by opening an issue on this repository or with an email to desantis@multicerta.it.
 
 ## Scoring Criteria
 Each feature and best practice contributes to a total score of **110 base points** (+15 bonus possible), allowing candidates to self-evaluate their implementation. The distribution is as follows:
