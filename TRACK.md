@@ -162,6 +162,6 @@ This is a Dockerized Typescript-based Invoice Management API project. It provide
     docker-compose exec backend npx prisma migrate deploy
    ```
    
-4. Run tests with coverage.
+4. Run tests with coverage (it is strongly suggested to run tests in a completely fresh and different environment before submitting the code)
 
 5. Use the Swagger UI or other OpenAPI-compatible client to test the APIs.
