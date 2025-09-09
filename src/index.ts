@@ -16,7 +16,7 @@ server.get('/', async (request, reply) => {
 });
 
 // Test endpoint to verify database connection
-server.get('/test-db', async (request: AuthRequest, reply) => {
+server.get('/test-db', async (request, reply) => {
   try {
     const users = await prisma.user.findMany();
     return { message: 'Database connection successful', users };
@@ -27,8 +27,8 @@ server.get('/test-db', async (request: AuthRequest, reply) => {
 
 // Protected route to test middleware
 server.get('/protected', { preHandler: authMiddleware }, async (request: AuthRequest, reply) => {
-  const user = request.user as { userId: number };
-  return { message: 'Protected route', userId: user.userId };
+  const user = request.user;
+  return { message: 'Protected route', userId: user?.userId };
 });
 
 server.register(authRoutes);
