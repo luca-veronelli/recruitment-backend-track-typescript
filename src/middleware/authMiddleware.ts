@@ -5,6 +5,7 @@ export interface AuthRequest extends FastifyRequest {
   user?: { userId: number };
 }
 
+export async function authMiddleware(request: AuthRequest, reply: FastifyReply) {
   const authHeader = request.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
     reply.status(401).send({ error: 'Missing or invalid Authorization header' });
@@ -14,7 +15,7 @@ export interface AuthRequest extends FastifyRequest {
   const token = authHeader.replace('Bearer ', '');
   try {
     const decoded = verifyToken(token);
-    (request.raw as any).user = decoded; 
+    request.user = decoded;
   } catch (error) {
     reply.status(401).send({ error: 'Unauthorized' });
   }

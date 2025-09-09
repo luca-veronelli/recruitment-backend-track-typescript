@@ -1,3 +1,4 @@
+import { AuthRequest } from './middleware/authMiddleware';
 import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
 import * as dotenv from 'dotenv';
@@ -15,7 +16,7 @@ server.get('/', async (request, reply) => {
 });
 
 // Test endpoint to verify database connection
-server.get('/test-db', async (request, reply) => {
+server.get('/test-db', async (request: AuthRequest, reply) => {
   try {
     const users = await prisma.user.findMany();
     return { message: 'Database connection successful', users };
@@ -25,8 +26,8 @@ server.get('/test-db', async (request, reply) => {
 });
 
 // Protected route to test middleware
-server.get('/protected', { preHandler: authMiddleware }, async (request, reply) => {
-  const user = (request.raw as any).user as { userId: number };
+server.get('/protected', { preHandler: authMiddleware }, async (request: AuthRequest, reply) => {
+  const user = request.user as { userId: number };
   return { message: 'Protected route', userId: user.userId };
 });
 
