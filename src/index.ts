@@ -1,12 +1,15 @@
 import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
 import * as dotenv from 'dotenv';
+import { authRoutes } from './routes/authRoutes';
+import { authMiddleware } from './middleware/authMiddleware';
 
 dotenv.config();
 
 const server = fastify();
 const prisma = new PrismaClient();
 
+// Basic route to test server
 server.get('/', async (request, reply) => {
   return { message: 'Hello World' };
 });
@@ -20,6 +23,14 @@ server.get('/test-db', async (request, reply) => {
     reply.status(500).send({ error: 'Database connection failed' });
   }
 });
+
+// Protected route to test middleware
+server.get('/protected', { preHandler: authMiddleware }, async (request, reply) => {
+  const user = (request.raw as any).user as { userId: number };
+  return { message: 'Protected route', userId: user.userId };
+});
+
+server.register(authRoutes);
 
 const start = async () => {
   try {
