@@ -11,7 +11,7 @@ export async function authMiddleware(request: FastifyRequest, reply: FastifyRepl
   const token = authHeader.replace('Bearer ', '');
   try {
     const decoded = verifyToken(token);
-    request.user = decoded; // Attach user to request
+    (request.raw as any).user = decoded; 
   } catch (error) {
     reply.status(401).send({ error: 'Unauthorized' });
   }
