@@ -1,3 +1,4 @@
+import { AuthRequest } from './middleware/authMiddleware';
 import fastify from 'fastify';
 import { PrismaClient } from '@prisma/client';
 import * as dotenv from 'dotenv';
@@ -25,10 +26,14 @@ server.get('/test-db', async (request, reply) => {
 });
 
 // Protected route to test middleware
-server.get('/protected', { preHandler: authMiddleware }, async (request, reply) => {
-  const user = (request.raw as any).user as { userId: number };
-  return { message: 'Protected route', userId: user.userId };
-});
+server.get(
+  '/protected',
+  { preHandler: authMiddleware },
+  async (request: AuthRequest, reply) => {
+    const user = request.user;
+    return { message: 'Protected route', userId: user?.userId };
+  },
+);
 
 server.register(authRoutes);
 
