@@ -26,10 +26,14 @@ server.get('/test-db', async (request, reply) => {
 });
 
 // Protected route to test middleware
-server.get('/protected', { preHandler: authMiddleware }, async (request: AuthRequest, reply) => {
-  const user = request.user;
-  return { message: 'Protected route', userId: user?.userId };
-});
+server.get(
+  '/protected',
+  { preHandler: authMiddleware },
+  async (request: AuthRequest, reply) => {
+    const user = request.user;
+    return { message: 'Protected route', userId: user?.userId };
+  },
+);
 
 server.register(authRoutes);
 

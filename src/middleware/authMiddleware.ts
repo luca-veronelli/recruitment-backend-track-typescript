@@ -5,10 +5,15 @@ export interface AuthRequest extends FastifyRequest {
   user?: { userId: number };
 }
 
-export async function authMiddleware(request: AuthRequest, reply: FastifyReply) {
+export async function authMiddleware(
+  request: AuthRequest,
+  reply: FastifyReply,
+) {
   const authHeader = request.headers.authorization;
   if (!authHeader || !authHeader.startsWith('Bearer ')) {
-    reply.status(401).send({ error: 'Missing or invalid Authorization header' });
+    reply
+      .status(401)
+      .send({ error: 'Missing or invalid Authorization header' });
     return;
   }
 
